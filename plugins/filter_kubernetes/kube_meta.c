@@ -104,19 +104,6 @@ static int get_local_pod_info(struct flb_kube *ctx)
     ctx->namespace = ns;
     ctx->namespace_len = ns_size;
 
-    /* POD Name */
-    hostname = getenv("HOSTNAME");
-    if (hostname) {
-        ctx->podname = flb_strdup(hostname);
-        ctx->podname_len = strlen(ctx->podname);
-    }
-    else {
-        char tmp[256];
-        gethostname(tmp, 256);
-        ctx->podname = flb_strdup(tmp);
-        ctx->podname_len = strlen(ctx->podname);
-    }
-
     /* Token */
     ctx->token = tk;
     ctx->token_len = tk_size;
@@ -669,11 +656,11 @@ int flb_kube_meta_init(struct flb_kube *ctx, struct flb_config *config)
 
     /* Gather info from API server */
     flb_info("[filter_kube] testing connectivity with API server...");
-    ret = get_api_server_info(ctx, ctx->namespace, ctx->podname,
+    ret = get_api_server_info(ctx, ctx->namespace, "",
                               &meta_buf, &meta_size);
     if (ret == -1) {
-        flb_error("[filter_kube] could not get meta for POD %s",
-                  ctx->podname);
+        flb_error("[filter_kube] could not get meta for pods in namespace %s",
+                  ctx->namespace);
         return -1;
     }
     flb_info("[filter_kube] API server connectivity OK");

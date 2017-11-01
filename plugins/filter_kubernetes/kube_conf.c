@@ -229,7 +229,6 @@ void flb_kube_conf_destroy(struct flb_kube *ctx)
     flb_free(ctx->token_file);
     flb_free(ctx->token);
     flb_free(ctx->namespace);
-    flb_free(ctx->podname);
     flb_free(ctx->auth);
 
     if (ctx->upstream) {

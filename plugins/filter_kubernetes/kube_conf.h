@@ -87,10 +87,6 @@ struct flb_kube {
     char *namespace;
     size_t namespace_len;
 
-    /* POD Name where Fluent Bit is running */
-    char *podname;
-    size_t podname_len;
-
     /* Kubernetes Token from FLB_KUBE_TOKEN file */
     char *token_file;
     char *token;
